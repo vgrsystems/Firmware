@@ -440,6 +440,9 @@ Ekf2::Ekf2():
 	_K_pstatic_coef_y(this, "PCOEF_Y"),
 	_K_pstatic_coef_z(this, "PCOEF_Z")
 {
+	// advertise the wind topic early to make sure we get the first instance (before the standalone wind estimator)
+	wind_estimate_s wind_estimate = {};
+	_wind_pub = orb_advertise(ORB_ID(wind_estimate), &wind_estimate);
 }
 
 int Ekf2::print_status()
